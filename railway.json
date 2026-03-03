@@ -6,6 +6,7 @@
   },
   "deploy": {
     "runtime": "V2",
+    "startCommand": "php -S 0.0.0.0:$PORT main.php",
     "numReplicas": 1,
     "sleepApplication": true,
     "useLegacyStacker": false,
