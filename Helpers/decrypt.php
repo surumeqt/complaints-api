@@ -1,7 +1,7 @@
 <?php
 function decrypt_data(string $ciphertext, string $iv, string $tag)
 {
-    $key = hex2bin($_ENV['SECRET_KEY']);
+    $key = hex2bin(getenv('SECRET_KEY'));
 
     // Decode exactly like encryption stored it
     $decodedCipher = $ciphertext;

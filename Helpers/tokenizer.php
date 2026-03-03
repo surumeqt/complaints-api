@@ -9,7 +9,7 @@ function generateAndSetToken(array $payload)
     $base64UrlHeader = base64UrlEncode($header);
     $base64UrlPayload = base64UrlEncode($payload);
 
-    $signature = hash_hmac('sha256', $base64UrlHeader . "." . $base64UrlPayload, $_ENV['JWT_SECRET'], true);
+    $signature = hash_hmac('sha256', $base64UrlHeader . "." . $base64UrlPayload, getenv('JWT_SECRET'), true);
     $base64UrlSignature = base64UrlEncode($signature);
 
     $token =  $base64UrlHeader . "." . $base64UrlPayload . "." . $base64UrlSignature;
@@ -17,7 +17,7 @@ function generateAndSetToken(array $payload)
     return setcookie('token', $token, [
         'expires' => time() + (60 * 60 * 24),
         'path' => '/',
-        'secure' => $_ENV['APP_ENV'] === 'prod',
+        'secure' => getenv('APP_ENV') === 'prod',
         'httponly' => true,
         'samesite' => 'Lax'
     ]);
@@ -29,7 +29,7 @@ function verify(string $token)
 
     [$header, $payload, $signature] = $parts;
 
-    $validSignature = base64UrlEncode(hash_hmac('sha256', $header . "." . $payload, $_ENV['JWT_SECRET'], true));
+    $validSignature = base64UrlEncode(hash_hmac('sha256', $header . "." . $payload, getenv('JWT_SECRET'), true));
 
     if ($signature !== $validSignature) return false;
 

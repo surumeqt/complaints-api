@@ -19,7 +19,7 @@ class ErrorMiddleware implements MiddlewareInterface
 
         } catch (Throwable $e) {
 
-            if ($_ENV['APP_ENV'] == 'dev') $this->log($e);
+            if (getenv('APP_ENV') == 'dev') $this->log($e);
 
             $statusCode = $e->getCode();
 
@@ -29,8 +29,8 @@ class ErrorMiddleware implements MiddlewareInterface
             
             Response::json([
                 'message' => $e->getMessage(),
-                'file' => $_ENV['APP_ENV'] === 'prod' ? null : $e->getFile(),
-                'line' => $_ENV['APP_ENV'] === 'prod' ? null : $e->getLine()
+                'file' => getenv('APP_ENV') === 'prod' ? null : $e->getFile(),
+                'line' => getenv('APP_ENV') === 'prod' ? null : $e->getLine()
             ], $statusCode);
         }
     }

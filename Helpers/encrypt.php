@@ -1,7 +1,7 @@
 <?php
 function encrypt_sensitive_fields(array $data, array $fieldsToEncrypt) 
 {
-    $key = hex2bin($_ENV['SECRET_KEY']);
+    $key = hex2bin(getenv('SECRET_KEY'));
     $results = [];
 
     foreach ($data as $keyName => $value) {

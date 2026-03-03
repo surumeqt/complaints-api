@@ -16,10 +16,10 @@ class DatabaseConfig
 
             try {
 
-                $host = $_ENV['DB_HOST'] ?? '127.0.0.1';
-                $name = $_ENV['DB_NAME'] ?? '';
-                $user = $_ENV['DB_USER'] ?? '';
-                $pass = $_ENV['DB_PASS'] ?? '';
+                $host = getenv('DB_HOST') ?? '127.0.0.1';
+                $name = getenv('DB_NAME') ?? '';
+                $user = getenv('DB_USER') ?? '';
+                $pass = getenv('DB_PASS') ?? '';
 
                 $dsn = "mysql:host={$host};dbname={$name};charset=utf8mb4";
 
