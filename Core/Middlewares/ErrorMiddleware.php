@@ -19,20 +19,18 @@ class ErrorMiddleware implements MiddlewareInterface
 
         } catch (Throwable $e) {
 
-            $this->log($e);
+            if ($_ENV['APP_ENV'] == 'dev') $this->log($e);
 
             $statusCode = $e->getCode();
 
             if ($statusCode < 100 || $statusCode >= 600) {
                 $statusCode = 500;
             }
-
+            
             Response::json([
-                'message' => $_ENV['APP_ENV'] === 'production'
-                    ? 'Internal Server Error'
-                    : $e->getMessage(),
-                'file' => $_ENV['APP_ENV'] === 'production' ? null : $e->getFile(),
-                'line' => $_ENV['APP_ENV'] === 'production' ? null : $e->getLine()
+                'message' => $e->getMessage(),
+                'file' => $_ENV['APP_ENV'] === 'prod' ? null : $e->getFile(),
+                'line' => $_ENV['APP_ENV'] === 'prod' ? null : $e->getLine()
             ], $statusCode);
         }
     }

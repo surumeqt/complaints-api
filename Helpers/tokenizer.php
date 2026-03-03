@@ -17,7 +17,7 @@ function generateAndSetToken(array $payload)
     return setcookie('token', $token, [
         'expires' => time() + (60 * 60 * 24),
         'path' => '/',
-        'secure' => false,
+        'secure' => $_ENV['APP_ENV'] === 'prod',
         'httponly' => true,
         'samesite' => 'Lax'
     ]);
