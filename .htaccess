@@ -1,0 +1,11 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    Options -Indexes
+    <Files ~ "\.(env|md|gitignore)$">
+        Order allow,deny
+        Deny from all
+    </Files>
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ main.php?params=$1 [L,QSA]
+</IfModule>
